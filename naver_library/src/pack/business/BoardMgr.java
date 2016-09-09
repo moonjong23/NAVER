@@ -64,8 +64,8 @@ public class BoardMgr {
 			pstmt.setString(3, bean.getPass());
 			pstmt.setString(4, bean.getMail());
 			pstmt.setString(5, bean.getTitle());
-			pstmt.setString(6, bean.getCont());
-			pstmt.setString(7, bean.getBip());
+			pstmt.setString(6, bean.getBip());
+			pstmt.setString(7, bean.getCont());
 			pstmt.setString(8, bean.getBdate());
 			pstmt.setInt(9, 0);	//readcnt
 			pstmt.setInt(10, bean.getGnum());
@@ -198,6 +198,7 @@ public class BoardMgr {
 				dto.setCont(rs.getString("cont"));
 				dto.setBip(rs.getString("bip"));
 				dto.setBdate(rs.getString("bdate"));
+				dto.setGnum(rs.getInt("gnum"));
 				dto.setReadcnt(rs.getInt("readcnt"));
 			}
 		} catch (Exception e) {
@@ -283,8 +284,8 @@ String sql = "insert into board values(?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt.setString(3, bean.getPass());
 			pstmt.setString(4, bean.getMail());
 			pstmt.setString(5, bean.getTitle());
-			pstmt.setString(6, bean.getCont());
-			pstmt.setString(7, bean.getBip());
+			pstmt.setString(6, bean.getBip());
+			pstmt.setString(7, bean.getCont());
 			pstmt.setString(8, bean.getBdate());
 			pstmt.setInt(9, 0);	//readcnt
 			pstmt.setInt(10, bean.getGnum());
@@ -305,18 +306,16 @@ String sql = "insert into board values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		}
 	}
 	
-	public boolean checkPass(int num, String new_pass){
+	public boolean checkPass(int num){
 		boolean b = false;
-		String sql = "select pass from board where num=?";
+		String sql = "select * from board where num=?";
 		
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
-			if(rs.next()){
-				if(new_pass.equals(rs.getString("pass"))) b= true;
-			}
+			if(rs.next()) b = true;
 		} catch (Exception e) {
 			System.out.println("checkPass err : " + e);
 		} finally {

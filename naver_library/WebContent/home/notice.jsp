@@ -33,7 +33,7 @@
 			<a href="../home/notice.jsp" class="black-text"><b>공지사항</b></a>
 		</td>
 		<td class="guidefont" style="text-align: center;">
-			<a href="boardwrite.jsp" class="black-text"><b>FAQ</b></a>
+			<a href="FAQ.jsp" class="black-text"><b>FAQ</b></a>
 		</td>
 		<td class="guidefont" style="text-align: center;">	
 			<a href="../board/boardlist.jsp?page=1" class="black-text"><b>Q&A</b></a>

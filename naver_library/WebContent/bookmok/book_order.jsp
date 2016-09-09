@@ -22,7 +22,7 @@ if(b){
 }else{
 	%>
 	<script>
-	alert("누군가 대여 하셨습니다.");
+	alert("누군가 대여한 목록이 있습니다");
 	location.href = "book_index3.jsp";
 	</script>
 	<%

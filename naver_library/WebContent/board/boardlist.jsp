@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="boardMgr" class="pack.business.BoardMgr"/>
-<jsp:useBean id="dto" class="pack.business.BoardDto" />
+<jsp:useBean id="dto" class="pack.business.BoardDto" /> 
 <%
 int spage = 1;
 int pageSu = 1;
@@ -14,7 +14,6 @@ int pageSu = 1;
 <meta charset="UTF-8">
 <title>MS LIBRARY</title>
 <link rel="shortcut icon" type="image/x-icon" href="http://www.naver.com/favicon.ico?1" />
-</style>
 <meta charset="UTF-8">
 <!-- 구글 아이콘 -->
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -35,6 +34,9 @@ window.onload = function(){
 		frm.submit();
 	}
 
+	document.getElementById("ref").onclick = function(){
+		sfrm.reset();
+	}
 }
 	function funcContent(a){
 		$.ajax({
@@ -55,13 +57,13 @@ window.onload = function(){
 <table class="col s12 m8 l2">
 	<tr>
 		<td class="guidefont" style="padding-left:14px; width: 95px; text-align: center;">	
-			<a href="../home/notice.jsp" class="black"><b>공지사항</b></a>
+			<a href="../home/notice.jsp" class="black-text"><b>공지사항</b></a>
 		</td>
 		<td class="guidefont" style="text-align: center;">
-			<a href="boardwrite.jsp" class="black"><b>FAQ</b></a>
+			<a href="../home/FAQ.jsp" class="black-text"><b>FAQ</b></a>
 		</td>
 		<td class="guidefont" style="text-align: center;">	
-			<a href="../board/boardlist.jsp?page=1" class="black"><b>Q&A</b></a>
+			<a href="../board/boardlist.jsp?page=1" class="black-text"><b>Q&A</b></a>
 		</td>
 	</tr>
 </table>
@@ -77,6 +79,9 @@ window.onload = function(){
 		<div class="col s12 m8 l2 pull-l1">
 			<h6 style="font-size: 9pt; color: silver"><i class="tiny material-icons">volume_up</i>라이브러리에서 궁금증을 해결해드립니다.</h6>
 		</div>
+			<a class="waves-effect waves-light modal-trigger btn col s12 m8 l1" style="width: 100px; margin-left: 373px;" href="#modal11">
+				글쓰기
+			</a>
 		</div>
 		<div class="row">
 		<div class="col s12 m8 l2 offset-l2" id="ajax2"></div>
@@ -162,14 +167,12 @@ window.onload = function(){
 				%>
 				
 				<form action="boardlist.jsp" name="frm" method="post">
-				<select name="stype">
+				<select name="stype" style="display: inline;" class="row col s12 m8 l2 offset-l2">
 				<option value="title" selected="selected">글제목</option>
 				<option value="name">작성자</option>
 				</select>
-				<div class="row col s12 m8 l12">
-				<input type="text" name="sword" class="row col s12 m8 l3 offset-l4" style="margin-left: 330px;">
-				<i class="tiny material-icons waves-effect waves-light btn green row col s12 m8 l1" id="btnSearch" style="width: 60px; height: 35px; margin-top: 10px;">검색</i>
-				</div>
+				<input type="text" name="sword" class="col s12 m8 l4">
+				<i class="tiny material-icons right waves-effect waves-light btn green row col s12 m8 l3 pull-l3" id="btnSearch" style="width: 80px; height: 35px; margin-top: 10px;">검색</i>
 				</form>
 				</td>
 			</tr>
@@ -178,6 +181,26 @@ window.onload = function(){
 	</tr>
 </table>
 </div>
+
+<div id="modal11" class="modal teal lighten-5" style="width: 450px; height: 780px;">
+    <div class="modal-content">
+    <form action="boardsave.jsp" method="post" name="sfrm">
+    		<div><br>
+    			새글등록  <i class="small material-icons right" style="vertical-align: top; cursor: pointer;" title="다시쓰기" id="ref">loop</i>
+    			<p/>
+    		</div><br/>
+    		<div style="border-bottom: solid 1px grey; width: 400px;"></div>
+    		<br>
+    		이 름 : <input type="text" name="name"><br>
+    		암 호 : <input type="text" name="pass"><br>
+    		제 목 : <input type="text" name="title"><br>
+    		내 용 : <textarea rows="1" cols="6" style="height: 160px; border-color: grey" name="cont"></textarea>
+    		<input type="submit" value="작성완료" class="btn" style="margin-top: 10px; width: 100%;">
+    		
+
+    </form>
+	</div>
+</div>    
 
 <%@ include file="../home/home_bottom.jsp" %>
 <!--제이쿼리-->

@@ -1,45 +1,21 @@
-<%@page import="pack.business.UserDto"%>
-<%@page import="pack.admin.UserBean"%>
 <%@page import="pack.business.OrderDto"%>
+<%@page import="pack.business.BookDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean id="processDao" class="pack.business.ProcessDao"></jsp:useBean>
+<jsp:useBean id="processDao" class="pack.business.ProcessDao"/>
 <jsp:useBean id="orderDto" class="pack.business.OrderDto"></jsp:useBean>
-<%String id = (String)session.getAttribute("idKey"); %>
-<%ArrayList<OrderDto> list = (ArrayList)processDao.book_basketList(id);%>
-<%UserBean bean = processDao.getUserAll(id);%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html> 
-<html>
-<head>
-<meta charset="UTF-8">
-<!-- 구글 아이콘 -->
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- 내 css -->	
-	<link href="../css/homestyle.css" rel="stylesheet" type="text/css">
-	<link href="../css/hj.css" rel="stylesheet" type="text/css">
-<!--제이쿼리-->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<!-- 메테리얼 -->
-	<link rel="stylesheet" href="../css/materialize.min.css">
-	<script src="../js/materialize.min.js"></script>
-<!-- 내 자바스크립트 -->	
-	<script type="text/javascript" src="../js/bookjs.js"></script>
-<!-- 뷰어 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<script>
-	$(document).ready(function(){
-		$('.modal-trigger').leanModal();
-		
-	});
-	</script>
+<%
+String id = (String)session.getAttribute("idKey");
+%>
+<%orderDto.setCid(id); %>
+<%orderDto.setBid((String)request.getParameter("bid")); %>
+<%
+processDao.basket_del(orderDto);
+%>
+<%ArrayList<OrderDto> list = (ArrayList)processDao.book_basketList(id);%>
 
-<title>네이버 도서관</title>
-</head>
-<body>
-	<%@ include file="../home/home_top.jsp" %>
-<div id="aja">
 <article class="container row">
 <c:set var="sum" value="0"/> <!-- 가격선언 -->
 <c:set var="count" value="0"/>
@@ -112,27 +88,3 @@ ${status.last}<br/>
   </div>
 </div>
 </div>
-<!-- 
-<nav style="width: 70%; margin: auto;" class="col s6 m6 l3">
-  <div class="nav-wrapper">
-    <a href="" class="brand-logo" style="margin-left: 400px">결제 금액 : ${sum}원</a>
-    <ul id="nav-mobile" class="right indigo">
-        <li><a href="book_order.jsp" style="width: 200px; text-align: center; font-size: 30px;">결제</a></li>
-    </ul>
-  </div>
-</nav>
- -->
-<!-- 
-<nav class="container row">
-  <div class="nav-wrapper">
-    <a href="" class="brand-logo col s9" >결제 금액 : ${sum}원</a>
-    <ul id="nav-mobile" class="right indigo col s3">
-        <li><a href="book_order.jsp" style="text-align: center; font-size: 30px;">결제</a></li>
-    </ul>
-  </div>
-</nav>
- -->
- 
-
-</body>
-</html>

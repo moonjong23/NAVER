@@ -173,13 +173,33 @@ public class ProcessDao {
 			String sql = "select * from bookbasket left join book on book.bid = bookbasket.bid where bookbasket.cid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				System.out.println(rs.getString("state"));
 				if(rs.getString("state").equals("0")){
+					a = true;
+					//System.out.println(a);
+				}else{
+					b = false;
+					//System.out.println(b);
+				}
+				
+			}
+			
+			if(a&&b == true){
+				c = true;
+			}
+			rs.beforeFirst();
+			
+			while(rs.next()){
+				System.out.println(c);
+			}
+			rs.beforeFirst();
+			
+			
+			while(rs.next() && c){
+				//System.out.println(rs.getString("state"));
+				
 					String sql1 = "insert into bookpay(bid,bname,bauthor,bcompany,bguk,byear,blocation,bjang,bimgsrc,price,date,enddate,bandate,cid,state) "
 							+ "values(?,?,?,?,?,?,?,?,?,?,now(),DATE_ADD(NOW(), INTERVAL +14 DAY),now(),?,?)";
 					pstmt1 = conn.prepareStatement(sql1);
@@ -197,7 +217,7 @@ public class ProcessDao {
 					pstmt1.setString(12, "1");
 					pstmt1.executeUpdate();
 					
-					String sql2 = "update book set state='1',cid=? where bid = ?";
+					String sql2 = "update book set state='1',cid=?,date=now(),enddate=DATE_ADD(NOW(), INTERVAL +14 DAY) where bid = ?";
 					
 					pstmt2 = conn.prepareStatement(sql2);
 					pstmt2.setString(1, id);
@@ -209,20 +229,11 @@ public class ProcessDao {
 					pstmt3.setString(1, rs.getString("bid"));
 					pstmt3.setString(2, id);
 					pstmt3.executeUpdate();
-					
-					a=true;
-					
-				}else{
-					System.out.println(rs.getString("bname") + "님이 대여 중입니다!");
-					b=false;
-				}
-				
+
 				
 			}
 			
-			if(a&&b == true){
-				c = true;
-			}
+			
 			
 			
 		} catch (Exception e) {
@@ -268,7 +279,7 @@ public class ProcessDao {
 		boolean b = false;
 		try {
 			conn = ds.getConnection();
-			String sql = "update book left join bookpay on book.bid=bookpay.bid set book.state = '0', book.cid = null, bookpay.state='0',bookpay.bandate = now() where book.bid = ? and book.cid = ? and bookpay.state = '1'";
+			String sql = "update book left join bookpay on book.bid=bookpay.bid set book.state = '0', book.cid = null,book.date = null, book.enddate = null, bookpay.state='0',bookpay.bandate = now() where book.bid = ? and book.cid = ? and bookpay.state = '1'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, bid);
 			pstmt.setString(2, cid);

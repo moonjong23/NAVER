@@ -80,7 +80,7 @@ String idkey = (String)session.getAttribute("idKey");
 					<hr class="hhl">
 					<p class="categoryf1">
 						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('java')">JAVA</a><br/>
-						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('web')">WEB</a><br/>
+						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('프로그래밍일반')">프로그래밍일반</a><br/>
 						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('기타언어')">기타언어</a><br/>
 						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('정보처리/알고리즘')">정보처리/알고리즘</a><br/>
 						<a style="text-decoration: none; color: black; cursor: pointer;" onclick="funcBjang('C')">C</a>
@@ -200,9 +200,24 @@ String idkey = (String)session.getAttribute("idKey");
 								<tr>
 									<th>서가위치</th>
 									<td>${b.blocation}</td>
-									<th>분류</th>
-									<td>${b.bjang}</td>
+									<th>가격</th>
+									<td>${b.price}원</td>
 								</tr>
+								<!-- 대여중 판단 대여날짜 -->
+								<c:choose>
+									<c:when test="${status.current.state == '1'}">
+										<tr>
+										<th>대여날짜</th>
+										<td>${b.date}</td>
+										<th>반납예정일</th>
+										<td>${b.enddate}</td>
+										</tr>
+									</c:when>
+								</c:choose>
+									
+								
+								
+								
 								<tr>
 									<!-- 
 									javascript:basketInsert('${status.current.bid}','${status.current.bname}','${status.current.bauthor}','${status.current.bcompany}','${status.current.bguk}','${status.current.byear}','${status.current.blocation}','${status.current.bjang}','${status.current.bimgsrc}','${status.current.price}')
